@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../spec_helper'
 
 describe DataMapper::Resource, 'Transactions' do
   before :all do
@@ -89,8 +89,8 @@ describe DataMapper::Resource, 'Transactions' do
       end
     end
 
-    it_should_behave_like 'A public Resource'
-    it_should_behave_like 'A Resource supporting Strategic Eager Loading'
+    it_behaves_like 'A public Resource'
+    it_behaves_like 'A Resource supporting Strategic Eager Loading'
   end
 
   describe '#transaction' do
@@ -183,12 +183,12 @@ describe DataMapper::Resource, 'Transactions' do
         end
         doit
 
-        @txn.instance_variable_get(:@state).should == :commit
+        expect(@txn.instance_variable_get(:@state)).to == :commit
         @txn = nil
       end
 
       it 'should return the last statement in the transaction block' do
-        @user_model.transaction { 1 }.should == 1
+        expect(@user_model.transaction { 1 }).to == 1
       end
 
       with_alternate_adapter do
@@ -214,7 +214,7 @@ describe DataMapper::Resource, 'Transactions' do
               # save a resource to another repository
               Article.create(:title => 'DataMapper Rocks!')
             end
-          }.should_not raise_error
+          }.not_to raise_error
         end
       end
     end
