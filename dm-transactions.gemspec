@@ -16,5 +16,4 @@ Gem::Specification.new do |gem|
   gem.version       = DataMapper::Transactions::VERSION
 
   gem.add_runtime_dependency('dm-core', '~> 1.3.0.beta')
-
 end
