@@ -107,31 +107,31 @@ describe DataMapper::Resource, 'Transactions' do
         @user_model.destroy!
       end
 
-      it 'should support nested transactions' do
+      it 'supports nested transactions' do
         # can't assume dm-aggregates
         begin
-          @user_model.all.length.should == 0
+          expect(@user_model.all.length).to eq 0
 
           @user_model.transaction do # txn 1
             @user_model.create(:name => 'jpr5')
 
-            @user_model.all.length.should == 1
+            expect(@user_model.all.length).to eq 1
 
             begin
               @user_model.transaction do # savepoint 1
                 @user_model.create(:name => 'dkubb')
-                @user_model.all.length.should == 2
+                expect(@user_model.all.length).to eq 2
 
                 raise
               end
             rescue => e
-              @user_model.all.length.should == 1
+              expect(@user_model.all.length).to eq 1
             end
 
             raise
           end
         rescue => e
-          @user_model.all.length.should == 0
+          expect(@user_model.all.length).to eq 0
         end
       end
     end
@@ -141,38 +141,38 @@ describe DataMapper::Resource, 'Transactions' do
         @user_model.destroy!
       end
 
-      it 'should have access to resources presisted before the transaction' do
+      it 'has access to resources presisted before the transaction' do
         @user_model.create(:name => 'carllerche')
         @user_model.transaction do
-          @user_model.first.name.should == 'carllerche'
+          expect(@user_model.first.name).to eq 'carllerche'
         end
       end
 
-      it 'should have access to resources persisted in the transaction' do
+      it 'has access to resources persisted in the transaction' do
         @user_model.transaction do
           @user_model.create(:name => 'carllerche')
-          @user_model.first.name.should == 'carllerche'
+          expect(@user_model.first.name).to eq 'carllerche'
         end
       end
 
-      it 'should not mark saved resources as new records' do
+      it 'does not mark saved resources as new records' do
         @user_model.transaction do
-          @user_model.create(:name => 'carllerche').should_not be_new
+          expect(@user_model.create(:name => 'carllerche')).not_to be_new
         end
       end
 
-      it 'should rollback when an error is raised in a transaction' do
-        @user_model.all.size.should == 0
-        lambda {
+      it 'rollback when an error is raised in a transaction' do
+        expect(@user_model.all.size).to eq 0
+        expect {
           @user_model.transaction do
             @user_model.create(:name => 'carllerche')
             raise 'I love coffee'
           end
-        }.should raise_error('I love coffee')
-        @user_model.all.size.should == 0
+        }.to raise_error('I love coffee')
+        expect(@user_model.all.size).to eq 0
       end
 
-      it 'should close the transaction if return is called within the closure' do
+      it 'closes the transaction if return is called within the closure' do
         @txn = nil
 
         def doit
@@ -183,12 +183,12 @@ describe DataMapper::Resource, 'Transactions' do
         end
         doit
 
-        expect(@txn.instance_variable_get(:@state)).to == :commit
+        expect(@txn.instance_variable_get(:@state)).to eq :commit
         @txn = nil
       end
 
-      it 'should return the last statement in the transaction block' do
-        expect(@user_model.transaction { 1 }).to == 1
+      it 'returns the last statement in the transaction block' do
+        expect(@user_model.transaction { 1 }).to eq 1
       end
 
       with_alternate_adapter do
@@ -206,7 +206,7 @@ describe DataMapper::Resource, 'Transactions' do
           DataMapper.auto_migrate!(:alternate)
         end
 
-        it 'should work with other repositories' do
+        it 'works with other repositories' do
           expect {
             DataMapper.repository.transaction.commit do
               Author.create(:name => 'Dan Kubb')
