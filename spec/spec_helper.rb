@@ -8,13 +8,11 @@ require 'dm-core/spec/lib/counter_adapter'
 require 'dm-core/spec/shared/resource_spec'
 require 'dm-core/spec/shared/sel_spec'
 
-Spec::Runner.configure do |config|
-
+RSpec.configure do |config|
   config.extend(DataMapper::Spec::Adapters::Helpers)
   config.include(DataMapper::Spec::PendingHelpers)
 
   config.after :all do
     DataMapper::Spec.cleanup_models
   end
-
 end
