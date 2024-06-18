@@ -25,6 +25,8 @@ platforms :mri_18 do
 end
 
 group :development do
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'rake'
   gem 'rspec'
   gem 'simplecov'
