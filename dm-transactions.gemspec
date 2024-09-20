@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.files            = `git ls-files`.split("\n")
   gem.extra_rdoc_files = %w(LICENSE README.rdoc)
 
-  gem.name          = 'dm-transactions'
+  gem.name          = 'sbf-dm-transactions'
   gem.require_paths = ['lib']
   gem.version       = DataMapper::Transactions::VERSION
 
