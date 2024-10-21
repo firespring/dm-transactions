@@ -1,8 +1,8 @@
 require File.expand_path('../lib/dm-transactions/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors     = ['Dirkjan Bussink (dbussink)', 'Dan Kubb (dkubb)']
-  gem.email       = ['gamsnjaga@gmail.com']
+  gem.authors     = ['opensource_firespring']
+  gem.email       = ['opensource@firespring.com']
   gem.summary     = 'Adds transaction support to DataMapper'
   gem.description = 'Makes transaction support available for adapters that support them'
   gem.license = 'Nonstandard'
