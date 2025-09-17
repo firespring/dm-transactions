@@ -79,8 +79,6 @@ module DataMapper
         end
       end
 
-      include Connection
-
       private
 
       # @api private
