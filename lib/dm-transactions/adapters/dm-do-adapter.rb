@@ -61,11 +61,7 @@ module DataMapper
         transactions.last
       end
 
-      def self.included(base)
-        base.prepend(Connection)
-      end
-
-      module Connection
+      chainable do
         protected
 
         # @api semipublic
